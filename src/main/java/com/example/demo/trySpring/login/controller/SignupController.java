@@ -5,8 +5,12 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.demo.trySpring.login.domain.model.SignupForm;
 
 
 @Controller
@@ -28,7 +32,7 @@ public class SignupController {
 	
 	// ユーザー登録画面のGET用コントローラー
 	@GetMapping("/signup")
-	public String getSignUp(Model model) {
+	public String getSignUp(@ModelAttribute SignupForm form, Model model) {
 		// ラジオボタンの初期化メソッド呼び出し
 		radioMarriage = initRadioMarrige();
 		// ラジオボタン用のMapを Modelに登録
@@ -40,7 +44,16 @@ public class SignupController {
 	
 	// ユーザー登録画面のPOST用コントローラー
 	@PostMapping("/signup")
-	public String postSignUp(Model model) {
+	public String postSignUp(@ModelAttribute SignupForm form, BindingResult bindingResult, Model model) {
+		
+		// データバインドが失敗した場合
+		// ユーザー登録画面に遷移
+		if (bindingResult.hasErrors()) {
+			return getSignUp(form, model);
+		}
+		
+		System.out.println(form);
+
 		// login.htmlに遷移（リダイレクト）
 		return "redirect:/login";
 	}

@@ -12,13 +12,13 @@
     <div class="page-header">
       <h1>ユーザー登録画面</h1>
     </div>
-    <form method="post" th:action="@{/signup}">
+    <form method="post" th:action="@{/signup}" th:object="${signupForm}">
       <table class="table table-bordered table-hover">
         <tr>
           <th class="active col-sm-3">ユーザーID</th>
           <td>
             <div class="form-group">
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" th:field="*{userId}" />
             </div>
           </td>
         </tr>
@@ -26,7 +26,7 @@
           <th class="active col-sm-3">パスワード</th>
           <td>
             <div class="form-group">
-              <input type="password" class="form-control" />
+              <input type="password" class="form-control" th:field="*{password}" />
             </div>
           </td>
         </tr>
@@ -34,7 +34,7 @@
           <th class="active col-sm-3">ユーザー名</th>
           <td>
             <div class="form-group">
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" th:field="*{userName}" />
             </div>
           </td>
         </tr>
@@ -42,7 +42,7 @@
           <th class="active col-sm-3">誕生日</th>
           <td>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="yyyy/MM/dd" />
+              <input type="text" class="form-control" placeholder="yyyy/MM/dd" th:field="*{brithday}" />
             </div>
           </td>
         </tr>
@@ -50,7 +50,7 @@
           <th class="active col-sm-3">年齢</th>
           <td>
             <div class="form-group">
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" th:field="*{age}" />
             </div>
           </td>
         </tr>
@@ -59,12 +59,17 @@
           <td>
             <div class="form-group">
               <div th:each="item : ${radioMarriage}">
-                <input type="radio" name="radioMarrige" th:text="${item.key}" th:value="${item.value}"></input>
+                <input type="radio" name="radioMarrige" th:text="${item.key}" th:value="${item.value}" th:field="*{marriage}"></input>
               </div>
             </div>
           </td>
         </tr>
       </table>
+      <ul>
+        <li th:each="error : ${#fields.detailedErrors()}">
+          <span th:text="${error.message}">Error message</span>
+        </li>
+      </ul>
       <button class="btn btn-primary" type="submit">ユーザー登録</button>
     </form>
   </div>
