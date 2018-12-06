@@ -1,6 +1,6 @@
 package com.example.demo.trySpring.login.domain.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,7 +18,7 @@ public class SignupForm {
 	
 	// 誕生日
 	@DateTimeFormat(pattern="yyyy/MM/dd")
-	private Date brithday;
+	private Date birthday;
 	
 	// 年齢
 	private int age;
