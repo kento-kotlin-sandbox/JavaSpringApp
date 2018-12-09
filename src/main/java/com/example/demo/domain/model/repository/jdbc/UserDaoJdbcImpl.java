@@ -1,6 +1,9 @@
 package com.example.demo.domain.model.repository.jdbc;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,7 +23,10 @@ public class UserDaoJdbcImpl implements UserDao {
 	// Userテーブルの件数を取得
 	@Override
 	public int count() throws DataAccessException {
-		return 0;
+		// 全件取得してカウント
+		int count =jdbc.queryForObject("SELECT COUNT(*) FROM m_user", Integer.class);
+
+		return count;
 	}
 	
 	// Userテーブルにデータを1件insert
@@ -55,7 +61,37 @@ public class UserDaoJdbcImpl implements UserDao {
 	// Userテーブルの全データを取得
 	@Override
 	public List<User> selectMany() throws DataAccessException {
-		return null;
+		// m_userテーブルのデータを全件取得
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM m_user");
+		
+		// 結果返却用リスト作成
+		List<User> userList = new ArrayList<>();
+		
+		// 取得したデータを結果返却用のListに格納
+		for (Map<String, Object> map : getList) {
+			// Userインスタンスの生成
+			User user = new User();
+			
+			// Userインスタンスに取得したデータをセット
+			// ユーザーID
+			user.setUserId((String)map.get("user_id"));
+			// パスワード
+			user.setPassword((String)map.get("password"));
+			// ユーザー名
+			user.setUserName((String)map.get("user_name"));
+			// 誕生日
+			user.setBirthday((Date)map.get("birthday"));
+			// 年齢
+			user.setAge((Integer)map.get("age"));
+			// 結婚ステータス
+			user.setMarriage((Boolean)map.get("marriage"));
+			// ロール
+			user.setRole((String)map.get("role"));
+			
+			// 結果返却用リストに追加
+			userList.add(user);
+		}
+		return userList;
 	}
 	
 	// Userテーブルを1件更新
