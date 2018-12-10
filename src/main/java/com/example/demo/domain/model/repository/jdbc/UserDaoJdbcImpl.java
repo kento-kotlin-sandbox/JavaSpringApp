@@ -55,7 +55,28 @@ public class UserDaoJdbcImpl implements UserDao {
 	// Userテーブルのデータを1件取得
 	@Override
 	public User selectOne(String userId) throws DataAccessException {
-		return null;
+		Map<String, Object> map = jdbc.queryForMap("SELECT * FROM m_user" + " WHERE user_id = ?", userId);
+		
+		// 結果返却用変数
+		User user = new User();
+		
+		// 取得結果をインスタンスにセット
+		// ユーザーID
+		user.setUserId((String)map.get("user_id"));
+		// パスワード
+        user.setPassword((String)map.get("passoword"));
+        // ユーザー名
+        user.setUserName((String)map.get("user_name"));
+        // 誕生日
+        user.setBirthday((Date)map.get("birthday"));
+        // 年齢
+        user.setAge((Integer)map.get("age"));
+        // 結婚ステータス
+        user.setMarriage((Boolean)map.get("marriage"));
+        // ロール
+        user.setRole((String)map.get("role"));
+
+		return user;
 	}
 	
 	// Userテーブルの全データを取得
@@ -103,7 +124,7 @@ public class UserDaoJdbcImpl implements UserDao {
 	// Userテーブルを1件削除
 	@Override
 	public int deleteOne(String userId) throws DataAccessException {
-		return 0;
+        return 0;
 	}
 	
 	// Userテーブルの全データをCSVに出力
