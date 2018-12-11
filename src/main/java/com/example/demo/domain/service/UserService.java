@@ -46,4 +46,35 @@ public class UserService {
     	// 取得実行
     	return dao.selectOne(userId);
     }
+    
+    // 1件更新
+    public Boolean updateOne(User user) {
+    	// 1件更新
+    	int rowNumber = dao.updateOne(user);
+    	// 判定用変数
+    	boolean result = false;
+    	
+    	if(rowNumber > 0) {
+    		// 更新成功
+    		result = true;
+    	}
+    	
+    	return result;
+    }
+    
+    // 1件削除メソッド
+    public boolean deleteOne(String userId) {
+    	// 1件削除
+    	int rowNumber = dao.deleteOne(userId);
+    	
+    	// 判定用変数
+    	boolean result = false;
+    	
+    	if (rowNumber > 0) {
+    		// 削除成功
+    		result = true;
+    	}
+    	
+    	return result;
+    }
 }
