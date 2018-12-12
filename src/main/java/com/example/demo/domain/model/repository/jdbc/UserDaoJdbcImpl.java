@@ -14,7 +14,7 @@ import com.example.demo.domain.model.User;
 import com.example.demo.domain.model.repository.UserDao;
 
 // TODO: 各ロジックを埋める
-@Repository
+@Repository("UserDaoJdbcImpl")
 public class UserDaoJdbcImpl implements UserDao {
     
 	@Autowired
