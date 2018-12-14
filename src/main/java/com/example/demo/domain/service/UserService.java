@@ -13,7 +13,7 @@ import com.example.demo.domain.model.repository.UserDao;
 @Service
 public class UserService {
     @Autowired
-    @Qualifier("UserDaoJdbcImpl3")
+    @Qualifier("UserDaoJdbcImpl4")
     UserDao dao;
     
     // insert用メソッド
