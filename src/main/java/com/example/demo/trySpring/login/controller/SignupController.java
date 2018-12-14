@@ -3,6 +3,7 @@ package com.example.demo.trySpring.login.controller;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,11 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.domain.model.User;
+import com.example.demo.domain.service.UserService;
 import com.example.demo.trySpring.login.domain.model.SignupForm;
 
 
 @Controller
 public class SignupController {
+	
+	@Autowired
+	private UserService userService;
 
 	// ラジオボタンの実装
 	private Map<String, String> radioMarriage;
@@ -54,7 +60,35 @@ public class SignupController {
 		}
 		
 		System.out.println(form);
-
+		
+		// insert用変数
+		User user = new User();
+		
+		// ユーザーID
+		user.setUserId(form.getUserId());
+		// パスワード
+		user.setPassword(form.getPassword());
+		// ユーザー名
+		user.setUserName(form.getUserName());
+		// 誕生日
+		user.setBirthday(form.getBirthday());
+		// 年齢
+		user.setAge(form.getAge());
+		// 結婚ステータス
+		user.setMarriage(form.isMarriage());
+		// ロール(一般)
+		user.setRole("ROLE_GENERAL");
+		
+		// ユーザー登録処理
+		boolean result = userService.insert(user);
+		
+		// ユーザー登録結果判定
+		if(result) {
+			System.out.println("登録成功");
+		} else {
+			System.out.println("登録失敗");
+		}
+		
 		// login.htmlに遷移（リダイレクト）
 		return "redirect:/login";
 	}
