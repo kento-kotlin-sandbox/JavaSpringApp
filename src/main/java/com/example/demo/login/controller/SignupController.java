@@ -1,4 +1,4 @@
-package com.example.demo.trySpring.login.controller;
+package com.example.demo.login.controller;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
