@@ -58,11 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// ログイン不要ページの設定
 		http.authorizeRequests()
-			.antMatchers("/webjars/**").permitAll()  // webjarsへのアクセス許可
-			.antMatchers("/css/**").permitAll()      // cssへのアクセス許可
-			.antMatchers("/login").permitAll()       // ログインページは直リンク許可
-			.antMatchers("/signup").permitAll()      // ユーザー登録画面は直リンク許可
-			.anyRequest().authenticated();           // それ以外は直リンク禁止
+			.antMatchers("/webjars/**").permitAll()           // webjarsへのアクセス許可
+			.antMatchers("/css/**").permitAll()               // cssへのアクセス許可
+			.antMatchers("/login").permitAll()                // ログインページは直リンク許可
+			.antMatchers("/signup").permitAll()               // ユーザー登録画面は直リンク許可
+			.antMatchers("/admin").hasAuthority("ROLE_ADMIN") // 権限の設定
+			.anyRequest().authenticated();                    // それ以外は直リンク禁止
 		
 		// ログイン処理
 		http.formLogin()
