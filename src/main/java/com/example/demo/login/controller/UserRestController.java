@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.model.User;
@@ -28,5 +30,23 @@ public class UserRestController {
 	public User getUserOne(@PathVariable("id") String userId) {
 		// ユーザー1件取得
 		return service.selectOne(userId);
+	}
+	
+	// ユーザー1件登録
+	@PostMapping("/rest/insert")
+	public String postUserOne(@RequestBody User user) {
+		// ユーザーを1件登録
+		boolean result = service.insert(user);
+		
+		String str = "";
+		
+		if(result) {
+			str = "{\"result\":\"ok\"}";
+		} else {
+			str = "{\"result\":\"error\"}";
+		}
+		
+		// 結果用の文字列を返す
+		return str;
 	}
 }
