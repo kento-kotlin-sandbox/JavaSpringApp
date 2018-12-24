@@ -29,13 +29,13 @@ public class RestServiceJdbcImpl implements RestService {
 	// 1件検索用メソッド
 	@Override
 	public User selectOne(String userId) {
-		return null;
+		return dao.selectOne(userId);
 	}
 	
 	// 全件検索用メソッド
 	@Override
 	public List<User> selectMany() {
-		return null;
+		return dao.selectMany();
 	}
 	
 	// 1件更新用メソッド
