@@ -3,9 +3,11 @@ package com.example.demo.login.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,6 +49,41 @@ public class UserRestController {
 		}
 		
 		// 結果用の文字列を返す
+		return str;
+	}
+	
+	// ユーザー1件更新
+	@PutMapping("/rest/update")
+	public String putUserOne(@RequestBody User user) {
+		// ユーザー1件更新
+		boolean result = service.update(user);
+		
+		String str = "";
+		
+		if(result) {
+			str = "{\"result\":\"ok\"}";
+		} else {
+			str = "{\"result\":\"error\"}";
+		}
+		
+		return str;
+	}
+	
+	// ユーザー1件削除
+	@DeleteMapping("/rest/delete/{id:.+}")
+	public String deleteUserOne(@PathVariable("id") String userId) {
+		// ユーザー1件削除
+		boolean result = service.delete(userId);
+		
+		String str = "";
+		
+		if(result) {
+			str = "{\"result\":\"ok\"}";
+		} else {
+			str = "{\"result\":\"error\"}";
+		}
+		
+		// 結果用の文字列をリターン
 		return str;
 	}
 }
